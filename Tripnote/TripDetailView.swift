@@ -1,3 +1,11 @@
+//
+//  TripDetailView.swift
+//  Tripnote
+//
+//  Created by Jaye Mondale on 8/7/26.
+//  Copyright © 2026 Jaye Mondale. All rights reserved.
+//
+
 import SwiftUI
 import SwiftData
 
