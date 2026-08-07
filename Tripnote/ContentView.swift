@@ -1,24 +1,23 @@
-//
-//  ContentView.swift
-//  Tripnote
-//
-//  Created by Jaye Mondale on 8/7/26.
-//
-
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            TripListView()
+                .tabItem {
+                    Label("Trips", systemImage: "map")
+                }
+
+            CaptureView()
+                .tabItem {
+                    Label("Capture", systemImage: "camera")
+                }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: [Trip.self, TripEvent.self, Note.self, Photo.self], inMemory: true)
 }

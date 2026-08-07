@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct TripnoteApp: App {
@@ -13,5 +14,6 @@ struct TripnoteApp: App {
         WindowGroup {
             ContentView()
         }
+        .modelContainer(for: [Trip.self, TripEvent.self, Note.self, Photo.self])
     }
 }
