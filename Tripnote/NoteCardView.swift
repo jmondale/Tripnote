@@ -7,11 +7,14 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NoteCardView: View {
     @Bindable var note: Note
+    @Environment(\.modelContext) private var modelContext
 
     @State private var viewerIndex: Int?
+    @FocusState private var isTextFocused: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -21,6 +24,13 @@ struct NoteCardView: View {
                         ForEach(Array(note.photos.enumerated()), id: \.element.id) { index, photo in
                             thumbnail(for: photo)
                                 .onTapGesture { viewerIndex = index }
+                                .contextMenu {
+                                    Button(role: .destructive) {
+                                        deletePhoto(photo)
+                                    } label: {
+                                        Label("Delete Photo", systemImage: "trash")
+                                    }
+                                }
                         }
                     }
                 }
@@ -28,18 +38,37 @@ struct NoteCardView: View {
 
             TextField("Add a note…", text: $note.text, axis: .vertical)
                 .font(.body)
+                .focused($isTextFocused)
 
             Text(note.createdDate, style: .date)
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
         .padding(.vertical, 6)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") { isTextFocused = false }
+            }
+        }
+        .onChange(of: isTextFocused) { _, focused in
+            guard !focused,
+                  note.text.trimmingCharacters(in: .whitespaces).isEmpty,
+                  note.photos.isEmpty
+            else { return }
+            modelContext.delete(note)
+        }
         .fullScreenCover(isPresented: Binding(
             get: { viewerIndex != nil },
             set: { if !$0 { viewerIndex = nil } }
         )) {
             PhotoViewerView(photos: note.photos, initialIndex: viewerIndex ?? 0)
         }
+    }
+
+    private func deletePhoto(_ photo: Photo) {
+        PhotoImportService.deleteFile(for: photo)
+        modelContext.delete(photo)
     }
 
     @ViewBuilder

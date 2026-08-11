@@ -15,19 +15,23 @@ struct TripDetailView: View {
 
     @State private var isImporting = false
     @State private var importError: String?
+    @State private var isPresentingEditTrip = false
 
     private var sortedNotes: [Note] {
         trip.notes.sorted { $0.createdDate > $1.createdDate }
     }
 
     var body: some View {
-        Group {
+        VStack(spacing: 0) {
+            actionBar
+            Divider()
             if trip.notes.isEmpty {
                 ContentUnavailableView(
                     "No Notes Yet",
                     systemImage: "note.text",
-                    description: Text("Add photos to start capturing this trip.")
+                    description: Text("Add a note or photos to start capturing this trip.")
                 )
+                .frame(maxHeight: .infinity)
             } else {
                 List {
                     ForEach(sortedNotes) { note in
@@ -38,12 +42,9 @@ struct TripDetailView: View {
             }
         }
         .navigationTitle(trip.name)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                PhotoPickerButton(onPick: handlePickedPhotos, label: "Add", systemImage: "photo.badge.plus")
-                    .labelStyle(.iconOnly)
-            }
+        .navigationBarTitleDisplayMode(.large)
+        .sheet(isPresented: $isPresentingEditTrip) {
+            EditTripSheet(trip: trip)
         }
         .overlay {
             if isImporting {
@@ -57,6 +58,48 @@ struct TripDetailView: View {
         }, message: {
             Text(importError ?? "")
         })
+    }
+
+    private var actionBar: some View {
+        HStack(spacing: 24) {
+            Spacer()
+            Button { isPresentingEditTrip = true } label: {
+                Label("Edit Trip", systemImage: "pencil")
+            }
+            Button { addTextNote() } label: {
+                Label("Note", systemImage: "square.and.pencil")
+            }
+            CameraCaptureButton(onCapture: handleCapturedPhoto, label: "Camera", systemImage: "camera")
+            PhotoPickerButton(onPick: handlePickedPhotos, label: "Photos", systemImage: "photo.badge.plus")
+        }
+        .labelStyle(.iconOnly)
+        .font(.system(size: 18))
+        .padding(.horizontal, 20)
+        .padding(.vertical, 12)
+        .background(.bar)
+    }
+
+    private func handleCapturedPhoto(_ data: Data) {
+        isImporting = true
+        Task { @MainActor in
+            let note = Note(trip: trip)
+            modelContext.insert(note)
+            do {
+                let photo = try PhotoImportService.importPhoto(from: data, note: note)
+                modelContext.insert(photo)
+                if note.location == nil, let loc = note.photos.first?.location {
+                    note.setLocation(loc)
+                }
+            } catch {
+                importError = "Photo couldn't be imported."
+            }
+            isImporting = false
+        }
+    }
+
+    private func addTextNote() {
+        let note = Note(trip: trip)
+        modelContext.insert(note)
     }
 
     /// Every batch of picked photos becomes one new Note, so a single capture moment
@@ -95,6 +138,52 @@ struct TripDetailView: View {
                 PhotoImportService.deleteFile(for: photo)
             }
             modelContext.delete(note)
+        }
+    }
+}
+
+private struct EditTripSheet: View {
+    @Bindable var trip: Trip
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var name: String
+    @State private var startDate: Date
+    @State private var hasEndDate: Bool
+    @State private var endDate: Date
+
+    init(trip: Trip) {
+        self.trip = trip
+        _name = State(initialValue: trip.name)
+        _startDate = State(initialValue: trip.startDate)
+        _hasEndDate = State(initialValue: trip.endDate != nil)
+        _endDate = State(initialValue: trip.endDate ?? trip.startDate)
+    }
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                TextField("Trip Name", text: $name)
+                DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+                Toggle("Multi-day trip", isOn: $hasEndDate.animation())
+                if hasEndDate {
+                    DatePicker("End Date", selection: $endDate, in: startDate..., displayedComponents: .date)
+                }
+            }
+            .navigationTitle("Edit Trip")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") {
+                        trip.name = name
+                        trip.startDate = startDate
+                        trip.endDate = hasEndDate ? endDate : nil
+                        dismiss()
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+            }
         }
     }
 }

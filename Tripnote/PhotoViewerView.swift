@@ -46,10 +46,9 @@ struct PhotoViewerView: View {
                     } label: {
                         Image(systemName: "xmark")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(.white)
                             .padding(12)
-                            .background(.black.opacity(0.4), in: Circle())
                     }
+                    .buttonStyle(.glass)
                     .padding()
                 }
                 Spacer()
