@@ -19,11 +19,16 @@ struct TripListView: View {
         NavigationStack {
             Group {
                 if trips.isEmpty {
-                    ContentUnavailableView(
-                        "No Trips Yet",
-                        systemImage: "map",
-                        description: Text("Start a trip to begin capturing memories.")
-                    )
+                    ContentUnavailableView {
+                        Label("No Trips Yet", systemImage: "map")
+                    } description: {
+                        Text("Start a trip to begin capturing memories.")
+                    } actions: {
+                        Button("Create Trip") {
+                            isPresentingNewTrip = true
+                        }
+                        .buttonStyle(.borderedProminent)
+                    }
                 } else {
                     List {
                         ForEach(trips) { trip in

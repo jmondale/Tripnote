@@ -115,7 +115,7 @@ struct CaptureReviewSheet: View {
             modelContext.insert(photo)
         }
 
-        if note.location == nil, let firstPhotoLocation = note.photos.first?.location {
+        if note.location == nil, let firstPhotoLocation = note.photos?.first?.location {
             note.setLocation(firstPhotoLocation)
         }
 

@@ -13,13 +13,13 @@ import SwiftData
 /// and Swift/Combine's `Event`-adjacent types.
 @Model
 final class TripEvent {
-    var id: UUID
-    var name: String
-    var date: Date
+    var id: UUID = UUID()
+    var name: String = ""
+    var date: Date = Date.now
     var trip: Trip?
 
     @Relationship(deleteRule: .cascade, inverse: \Note.event)
-    var notes: [Note] = []
+    var notes: [Note]? = nil
 
     init(name: String, date: Date = .now, trip: Trip? = nil) {
         self.id = UUID()

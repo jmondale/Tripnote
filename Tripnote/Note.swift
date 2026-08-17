@@ -12,9 +12,10 @@ import CoreLocation
 
 @Model
 final class Note {
-    var id: UUID
-    var text: String
-    var createdDate: Date
+    // Default values are required for CloudKit compatibility.
+    var id: UUID = UUID()
+    var text: String = ""
+    var createdDate: Date = Date.now
 
     // Optional location for the note itself (may be inferred from its first photo's EXIF data).
     var latitude: Double?
@@ -24,7 +25,7 @@ final class Note {
     var event: TripEvent?
 
     @Relationship(deleteRule: .cascade, inverse: \Photo.note)
-    var photos: [Photo] = []
+    var photos: [Photo]? = nil
 
     init(text: String = "", createdDate: Date = .now, trip: Trip? = nil, event: TripEvent? = nil) {
         self.id = UUID()

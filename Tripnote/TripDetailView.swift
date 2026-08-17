@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct TripDetailView: View {
     @Bindable var trip: Trip
@@ -16,21 +17,27 @@ struct TripDetailView: View {
     @State private var isImporting = false
     @State private var importError: String?
     @State private var isPresentingEditTrip = false
+    @State private var exportedPDFURL: URL?
 
     private var sortedNotes: [Note] {
-        trip.notes.sorted { $0.createdDate > $1.createdDate }
+        (trip.notes ?? []).sorted { $0.createdDate > $1.createdDate }
     }
 
     var body: some View {
         VStack(spacing: 0) {
             actionBar
             Divider()
-            if trip.notes.isEmpty {
-                ContentUnavailableView(
-                    "No Notes Yet",
-                    systemImage: "note.text",
-                    description: Text("Add a note or photos to start capturing this trip.")
-                )
+            if (trip.notes ?? []).isEmpty {
+                ContentUnavailableView {
+                    Label("No Notes Yet", systemImage: "note.text")
+                } description: {
+                    Text("Add a note or photos to start capturing this trip.")
+                } actions: {
+                    Button("Add Note") {
+                        addTextNote()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
                 .frame(maxHeight: .infinity)
             } else {
                 List {
@@ -43,8 +50,26 @@ struct TripDetailView: View {
         }
         .navigationTitle(trip.name)
         .navigationBarTitleDisplayMode(.large)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    exportedPDFURL = try? TripExporter.exportPDF(for: trip)
+                } label: {
+                    Image(systemName: "square.and.arrow.up")
+                }
+                .accessibilityLabel("Share Trip")
+                .disabled((trip.notes ?? []).isEmpty)
+            }
+        }
         .sheet(isPresented: $isPresentingEditTrip) {
             EditTripSheet(trip: trip)
+        }
+        .sheet(item: Binding(
+            get: { exportedPDFURL.map(ShareableURL.init) },
+            set: { exportedPDFURL = $0?.url }
+        )) { item in
+            ShareView(url: item.url)
+                .ignoresSafeArea()
         }
         .overlay {
             if isImporting {
@@ -87,7 +112,7 @@ struct TripDetailView: View {
             do {
                 let photo = try PhotoImportService.importPhoto(from: data, note: note)
                 modelContext.insert(photo)
-                if note.location == nil, let loc = note.photos.first?.location {
+                if note.location == nil, let loc = (note.photos ?? []).first?.location {
                     note.setLocation(loc)
                 }
             } catch {
@@ -123,7 +148,7 @@ struct TripDetailView: View {
             }
 
             // If the note ended up with no location, inherit one from its first photo.
-            if note.location == nil, let firstPhotoLocation = note.photos.first?.location {
+            if note.location == nil, let firstPhotoLocation = (note.photos ?? []).first?.location {
                 note.setLocation(firstPhotoLocation)
             }
 
@@ -134,12 +159,27 @@ struct TripDetailView: View {
     private func deleteNotes(at offsets: IndexSet) {
         for index in offsets {
             let note = sortedNotes[index]
-            for photo in note.photos {
+            for photo in note.photos ?? [] {
                 PhotoImportService.deleteFile(for: photo)
             }
             modelContext.delete(note)
         }
     }
+}
+
+private struct ShareableURL: Identifiable {
+    let id = UUID()
+    let url: URL
+}
+
+private struct ShareView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: [url], applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 private struct EditTripSheet: View {

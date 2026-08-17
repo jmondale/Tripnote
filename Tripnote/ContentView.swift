@@ -10,6 +10,8 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+
     var body: some View {
         TabView {
             TripListView()
@@ -21,6 +23,12 @@ struct ContentView: View {
                 .tabItem {
                     Label("Capture", systemImage: "camera")
                 }
+        }
+        .fullScreenCover(isPresented: Binding(
+            get: { !hasSeenOnboarding },
+            set: { hasSeenOnboarding = !$0 }
+        )) {
+            OnboardingView { hasSeenOnboarding = true }
         }
     }
 }

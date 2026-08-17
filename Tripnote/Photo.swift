@@ -12,11 +12,12 @@ import CoreLocation
 
 @Model
 final class Photo {
-    var id: UUID
+    // Default values are required for CloudKit compatibility.
+    var id: UUID = UUID()
 
     /// Filename of the full-resolution image stored in the app's Documents/Photos directory.
     /// We store a reference rather than raw Data in the model to keep the SwiftData store lean.
-    var fileName: String
+    var fileName: String = ""
 
     /// Small JPEG thumbnail kept inline for fast list/grid rendering.
     @Attribute(.externalStorage)

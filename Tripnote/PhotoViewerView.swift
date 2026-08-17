@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import Photos
 
 struct PhotoViewerView: View {
     let photos: [Photo]
@@ -15,6 +16,9 @@ struct PhotoViewerView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var currentIndex: Int
     @State private var dragOffset: CGSize = .zero
+    @State private var saveStatus: SaveStatus?
+
+    private enum SaveStatus { case success, denied }
 
     init(photos: [Photo], initialIndex: Int) {
         self.photos = photos
@@ -48,10 +52,40 @@ struct PhotoViewerView: View {
                             .font(.system(size: 16, weight: .semibold))
                             .padding(12)
                     }
+                    .accessibilityLabel("Close")
                     .buttonStyle(.glass)
                     .padding()
                 }
                 Spacer()
+                HStack {
+                    Spacer()
+                    Button {
+                        Task { await saveCurrentPhoto() }
+                    } label: {
+                        Image(systemName: "square.and.arrow.down")
+                            .font(.system(size: 16, weight: .semibold))
+                            .padding(12)
+                    }
+                    .accessibilityLabel("Save to Photos")
+                    .buttonStyle(.glass)
+                    .padding()
+                }
+            }
+            if let status = saveStatus {
+                VStack {
+                    Spacer()
+                    Label(
+                        status == .success ? "Saved to Photos" : "Could not save photo",
+                        systemImage: status == .success ? "checkmark.circle.fill" : "xmark.circle.fill"
+                    )
+                    .font(.subheadline.weight(.medium))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 10)
+                    .background(.ultraThinMaterial, in: Capsule())
+                    .padding(.bottom, 80)
+                    .transition(.opacity.combined(with: .move(edge: .bottom)))
+                }
             }
         }
         .statusBarHidden()
@@ -73,6 +107,35 @@ struct PhotoViewerView: View {
 
     private func fullImage(for photo: Photo) -> UIImage? {
         UIImage(contentsOfFile: photo.fileURL.path)
+    }
+
+    private func saveCurrentPhoto() async {
+        guard currentIndex < photos.count,
+              let image = fullImage(for: photos[currentIndex]) else { return }
+
+        let authorization = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
+        guard authorization == .authorized || authorization == .limited else {
+            withAnimation { saveStatus = .denied }
+            clearSaveStatus()
+            return
+        }
+
+        do {
+            try await PHPhotoLibrary.shared().performChanges {
+                PHAssetCreationRequest.creationRequestForAsset(from: image)
+            }
+            withAnimation { saveStatus = .success }
+        } catch {
+            withAnimation { saveStatus = .denied }
+        }
+        clearSaveStatus()
+    }
+
+    private func clearSaveStatus() {
+        Task {
+            try? await Task.sleep(for: .seconds(2))
+            withAnimation { saveStatus = nil }
+        }
     }
 
     /// Fades the black backdrop out as the user drags down, so the dismiss gesture feels responsive.

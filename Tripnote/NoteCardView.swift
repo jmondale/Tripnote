@@ -18,10 +18,10 @@ struct NoteCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if !note.photos.isEmpty {
+            if !(note.photos ?? []).isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
-                        ForEach(Array(note.photos.enumerated()), id: \.element.id) { index, photo in
+                        ForEach(Array((note.photos ?? []).enumerated()), id: \.element.id) { index, photo in
                             thumbnail(for: photo)
                                 .onTapGesture { viewerIndex = index }
                                 .contextMenu {
@@ -54,7 +54,7 @@ struct NoteCardView: View {
         .onChange(of: isTextFocused) { _, focused in
             guard !focused,
                   note.text.trimmingCharacters(in: .whitespaces).isEmpty,
-                  note.photos.isEmpty
+                  (note.photos ?? []).isEmpty
             else { return }
             modelContext.delete(note)
         }
@@ -62,7 +62,7 @@ struct NoteCardView: View {
             get: { viewerIndex != nil },
             set: { if !$0 { viewerIndex = nil } }
         )) {
-            PhotoViewerView(photos: note.photos, initialIndex: viewerIndex ?? 0)
+            PhotoViewerView(photos: note.photos ?? [], initialIndex: viewerIndex ?? 0)
         }
     }
 

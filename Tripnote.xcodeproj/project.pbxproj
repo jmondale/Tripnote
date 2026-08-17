@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E4E4C2F53033C70F00C81093 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E4C2F43033C70F00C81093 /* OnboardingView.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		E4746D2C302906AC0002AB4B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -19,7 +23,18 @@
 /* Begin PBXFileReference section */
 		E4746D28302906AC0002AB4B /* TripnoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripnoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BF894F302660F40033F481 /* Tripnote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripnote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4E4C2F43033C70F00C81093 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Tripnote" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = E4BF894E302660F40033F481 /* Tripnote */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		E4746D29302906AC0002AB4B /* TripnoteTests */ = {
@@ -29,6 +44,9 @@
 		};
 		E4BF8951302660F40033F481 /* Tripnote */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Tripnote" target */,
+			);
 			path = Tripnote;
 			sourceTree = "<group>";
 		};
@@ -58,6 +76,7 @@
 				E4BF8951302660F40033F481 /* Tripnote */,
 				E4746D29302906AC0002AB4B /* TripnoteTests */,
 				E4BF8950302660F40033F481 /* Products */,
+				E4E4C2F43033C70F00C81093 /* OnboardingView.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -186,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4E4C2F53033C70F00C81093 /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,11 +388,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tripnote/Tripnote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tripnote/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Tripnote uses your photo library to attach pictures to your trip notes.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -401,11 +423,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Tripnote/Tripnote.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Tripnote/Info.plist;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Tripnote uses your photo library to attach pictures to your trip notes.\"";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

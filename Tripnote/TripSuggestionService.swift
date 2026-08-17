@@ -52,7 +52,7 @@ enum TripSuggestionService {
         guard let photoLocation = photo.location else { return nil }
 
         for trip in trips {
-            let tripPhotoLocations = trip.notes.flatMap(\.photos).compactMap(\.location)
+            let tripPhotoLocations = (trip.notes ?? []).flatMap { $0.photos ?? [] }.compactMap(\.location)
             if tripPhotoLocations.contains(where: { $0.distance(from: photoLocation) <= locationMatchRadiusMeters }) {
                 return trip
             }
