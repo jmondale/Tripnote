@@ -17,5 +17,9 @@
 	<array>
 		<string>iCloud.jem.Tripnote</string>
 	</array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.jmondale.Tripnote</string>
+	</array>
 </dict>
 </plist>

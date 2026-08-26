@@ -14,6 +14,18 @@ struct TripListView: View {
     @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
 
     @State private var isPresentingNewTrip = false
+    @State private var searchText = ""
+
+    private var filteredTrips: [Trip] {
+        guard !searchText.isEmpty else { return trips }
+        let lower = searchText.lowercased()
+        return trips.filter { trip in
+            trip.name.lowercased().contains(lower) ||
+            (trip.notes ?? []).contains { note in
+                note.text.lowercased().contains(lower)
+            }
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -29,9 +41,11 @@ struct TripListView: View {
                         }
                         .buttonStyle(.borderedProminent)
                     }
+                } else if filteredTrips.isEmpty {
+                    ContentUnavailableView.search(text: searchText)
                 } else {
                     List {
-                        ForEach(trips) { trip in
+                        ForEach(filteredTrips) { trip in
                             NavigationLink(value: trip) {
                                 TripRow(trip: trip)
                             }
@@ -44,6 +58,7 @@ struct TripListView: View {
             .navigationDestination(for: Trip.self) { trip in
                 TripDetailView(trip: trip)
             }
+            .searchable(text: $searchText, prompt: "Search trips and notes")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
@@ -56,12 +71,18 @@ struct TripListView: View {
             .sheet(isPresented: $isPresentingNewTrip) {
                 NewTripSheet()
             }
+            .onAppear {
+                WidgetDataManager.update(with: trips.first)
+            }
+            .onChange(of: trips) { _, newTrips in
+                WidgetDataManager.update(with: newTrips.first)
+            }
         }
     }
 
     private func deleteTrips(at offsets: IndexSet) {
         for index in offsets {
-            modelContext.delete(trips[index])
+            modelContext.delete(filteredTrips[index])
         }
     }
 }

@@ -23,6 +23,11 @@ struct ContentView: View {
                 .tabItem {
                     Label("Capture", systemImage: "camera")
                 }
+
+            TripMapView()
+                .tabItem {
+                    Label("Map", systemImage: "map.fill")
+                }
         }
         .fullScreenCover(isPresented: Binding(
             get: { !hasSeenOnboarding },
