@@ -106,7 +106,12 @@ struct PhotoViewerView: View {
     }
 
     private func fullImage(for photo: Photo) -> UIImage? {
-        UIImage(contentsOfFile: photo.fileURL.path)
+        // Prefer the full-resolution file; fall back to thumbnail if the file was
+        // deleted (e.g. after an app reinstall wiped the Documents directory).
+        if let image = UIImage(contentsOfFile: photo.fileURL.path) {
+            return image
+        }
+        return photo.thumbnailData.flatMap { UIImage(data: $0) }
     }
 
     private func saveCurrentPhoto() async {

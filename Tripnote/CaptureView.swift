@@ -32,7 +32,7 @@ struct CaptureView: View {
                     .padding(.horizontal, 32)
 
                 VStack(spacing: 12) {
-                    CameraCaptureButton(onCapture: { handlePicked([$0]) })
+                    CameraCaptureButton(onCapture: { handlePicked([PickedPhoto(data: $0, location: nil)]) })
                         .buttonStyle(.borderedProminent)
 
                     PhotoPickerButton(onPick: handlePicked, label: "Choose from Library", systemImage: "photo.on.rectangle")
@@ -64,16 +64,20 @@ struct CaptureView: View {
         }
     }
 
-    private func handlePicked(_ dataItems: [Data]) {
-        guard !dataItems.isEmpty else { return }
+    private func handlePicked(_ pickedPhotos: [PickedPhoto]) {
+        guard !pickedPhotos.isEmpty else { return }
         isImporting = true
 
         Task { @MainActor in
             var imported: [Photo] = []
-            for data in dataItems {
+            for picked in pickedPhotos {
                 do {
                     // note: nil for now — assigned once the user confirms a trip in the review sheet.
-                    let photo = try PhotoImportService.importPhoto(from: data, note: nil)
+                    let photo = try PhotoImportService.importPhoto(from: picked.data, note: nil)
+                    // PHPicker strips GPS from image bytes; use the PHAsset location if available.
+                    if let location = picked.location {
+                        photo.setLocation(location)
+                    }
                     imported.append(photo)
                 } catch {
                     importError = "One or more photos couldn't be imported."

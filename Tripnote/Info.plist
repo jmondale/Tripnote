@@ -6,6 +6,8 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Tripnote uses your location to pin notes and photos on the map.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Tripnote uses your camera to capture photos for your trip notes.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

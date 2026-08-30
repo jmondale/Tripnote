@@ -8,11 +8,21 @@
 
 import SwiftUI
 import PhotosUI
+import Photos
+import CoreLocation
 
-/// Wraps the native SwiftUI `PhotosPicker` (PhotosUI) to select one or more images
-/// and hand back raw Data for each, ready for PhotoImportService.
+/// Image data paired with its PHAsset-derived location (which PHPicker strips from the
+/// raw data for privacy). Location is nil if the photo has no GPS tag or the asset
+/// cannot be fetched.
+struct PickedPhoto {
+    let data: Data
+    let location: CLLocation?
+}
+
+/// Wraps the native SwiftUI `PhotosPicker` to select one or more images and hand back
+/// each image's data alongside its original GPS location from the PHAsset.
 struct PhotoPickerButton: View {
-    let onPick: ([Data]) -> Void
+    let onPick: ([PickedPhoto]) -> Void
     var selectionLimit: Int = 0 // 0 = no limit
     var label: String = "Add Photos"
     var systemImage: String = "photo.badge.plus"
@@ -38,11 +48,17 @@ struct PhotoPickerButton: View {
     private func loadData(from items: [PhotosPickerItem]) {
         isLoading = true
         Task {
-            var results: [Data] = []
+            var results: [PickedPhoto] = []
             for item in items {
-                if let data = try? await item.loadTransferable(type: Data.self) {
-                    results.append(data)
+                guard let data = try? await item.loadTransferable(type: Data.self) else { continue }
+                // PHPicker strips GPS from the returned image bytes. Look it up from the
+                // PHAsset using the item's stable local identifier instead.
+                var location: CLLocation?
+                if let identifier = item.itemIdentifier {
+                    let assets = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: nil)
+                    location = assets.firstObject?.location
                 }
+                results.append(PickedPhoto(data: data, location: location))
             }
             await MainActor.run {
                 onPick(results)

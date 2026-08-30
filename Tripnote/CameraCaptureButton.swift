@@ -32,7 +32,7 @@ struct CameraCaptureButton: View {
     }
 }
 
-private struct CameraPicker: UIViewControllerRepresentable {
+struct CameraPicker: UIViewControllerRepresentable {
     let onCapture: (Data) -> Void
     @Environment(\.dismiss) private var dismiss
 

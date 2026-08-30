@@ -9,10 +9,12 @@
 import SwiftUI
 import SwiftData
 import UIKit
+import CoreLocation
 
 struct TripDetailView: View {
     @Bindable var trip: Trip
     @Environment(\.modelContext) private var modelContext
+    @Environment(LocationManager.self) private var locationManager
 
     @State private var isImporting = false
     @State private var importError: String?
@@ -43,13 +45,20 @@ struct TripDetailView: View {
                 List {
                     ForEach(sortedNotes) { note in
                         NoteCardView(note: note)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    deleteNote(note)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                     }
-                    .onDelete(perform: deleteNotes)
                 }
             }
         }
         .navigationTitle(trip.name)
         .navigationBarTitleDisplayMode(.large)
+        .onAppear { locationManager.requestLocation() }
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
@@ -96,6 +105,7 @@ struct TripDetailView: View {
             }
             CameraCaptureButton(onCapture: handleCapturedPhoto, label: "Camera", systemImage: "camera")
             PhotoPickerButton(onPick: handlePickedPhotos, label: "Photos", systemImage: "photo.badge.plus")
+
         }
         .labelStyle(.iconOnly)
         .font(.system(size: 18))
@@ -112,7 +122,8 @@ struct TripDetailView: View {
             do {
                 let photo = try PhotoImportService.importPhoto(from: data, note: note)
                 modelContext.insert(photo)
-                if note.location == nil, let loc = (note.photos ?? []).first?.location {
+                // Prefer EXIF location; fall back to current device location.
+                if let loc = (note.photos ?? []).first?.location ?? locationManager.lastLocation {
                     note.setLocation(loc)
                 }
             } catch {
@@ -124,46 +135,54 @@ struct TripDetailView: View {
 
     private func addTextNote() {
         let note = Note(trip: trip)
+        if let loc = locationManager.lastLocation {
+            note.setLocation(loc)
+        }
         modelContext.insert(note)
     }
 
     /// Every batch of picked photos becomes one new Note, so a single capture moment
     /// (e.g. three shots of the same waterfall) stays grouped together. The user can
     /// edit the note's text afterward from the note card.
-    private func handlePickedPhotos(_ dataItems: [Data]) {
-        guard !dataItems.isEmpty else { return }
+    private func handlePickedPhotos(_ pickedPhotos: [PickedPhoto]) {
+        guard !pickedPhotos.isEmpty else { return }
         isImporting = true
 
         Task { @MainActor in
             let note = Note(trip: trip)
             modelContext.insert(note)
 
-            for data in dataItems {
+            var firstAssetLocation: CLLocation?
+            for picked in pickedPhotos {
                 do {
-                    let photo = try PhotoImportService.importPhoto(from: data, note: note)
+                    let photo = try PhotoImportService.importPhoto(from: picked.data, note: note)
                     modelContext.insert(photo)
+                    if firstAssetLocation == nil {
+                        // Prefer EXIF GPS embedded in the image; then the PHAsset location
+                        // recovered from the asset (PHPicker strips EXIF, so this is the
+                        // reliable source for library photos).
+                        firstAssetLocation = photo.location ?? picked.location
+                    }
                 } catch {
                     importError = "One or more photos couldn't be imported."
                 }
             }
 
-            // If the note ended up with no location, inherit one from its first photo.
-            if note.location == nil, let firstPhotoLocation = (note.photos ?? []).first?.location {
-                note.setLocation(firstPhotoLocation)
+            // Use the photo's own location — not the current device location — so that
+            // retroactively imported photos reflect where they were actually taken.
+            if let loc = firstAssetLocation {
+                note.setLocation(loc)
             }
 
             isImporting = false
         }
     }
 
-    private func deleteNotes(at offsets: IndexSet) {
-        for index in offsets {
-            let note = sortedNotes[index]
-            for photo in note.photos ?? [] {
-                PhotoImportService.deleteFile(for: photo)
-            }
-            modelContext.delete(note)
+    private func deleteNote(_ note: Note) {
+        for photo in note.photos ?? [] {
+            PhotoImportService.deleteFile(for: photo)
         }
+        modelContext.delete(note)
     }
 }
 

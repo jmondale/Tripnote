@@ -11,35 +11,40 @@ import MapKit
 import SwiftData
 
 struct TripMapView: View {
-    @Query private var allPhotos: [Photo]
-    @State private var selectedPhoto: Photo?
+    @Environment(LocationManager.self) private var locationManager
+    @Query private var allNotes: [Note]
+    @State private var selectedNote: Note?
 
-    private var geoPhotos: [Photo] {
-        allPhotos.filter { $0.latitude != nil && $0.longitude != nil }
+    private var geoNotes: [Note] {
+        allNotes.filter { $0.latitude != nil && $0.longitude != nil }
     }
 
     var body: some View {
         NavigationStack {
             Group {
-                if geoPhotos.isEmpty {
+                if geoNotes.isEmpty {
                     ContentUnavailableView {
                         Label("No Locations Yet", systemImage: "map.fill")
                     } description: {
-                        Text("Photos with GPS data will appear as pins on the map.")
+                        Text("Notes and photos will appear as pins once location access is granted.")
                     }
                 } else {
                     Map {
-                        ForEach(geoPhotos) { photo in
+                        ForEach(geoNotes) { note in
                             Annotation(
-                                photo.note?.trip?.name ?? "",
+                                note.trip?.name ?? "",
                                 coordinate: CLLocationCoordinate2D(
-                                    latitude: photo.latitude!,
-                                    longitude: photo.longitude!
+                                    latitude: note.latitude!,
+                                    longitude: note.longitude!
                                 ),
                                 anchor: .bottom
                             ) {
-                                photoPin(photo)
-                                    .onTapGesture { selectedPhoto = photo }
+                                notePin(note)
+                                    .onTapGesture {
+                                        if !(note.photos ?? []).isEmpty {
+                                            selectedNote = note
+                                        }
+                                    }
                             }
                         }
                     }
@@ -47,17 +52,16 @@ struct TripMapView: View {
                 }
             }
             .navigationTitle("Map")
-            .fullScreenCover(item: $selectedPhoto) { photo in
-                let photos = photo.note?.photos ?? [photo]
-                let index = photos.firstIndex(where: { $0.id == photo.id }) ?? 0
-                PhotoViewerView(photos: photos, initialIndex: index)
+            .onAppear { locationManager.requestLocation() }
+            .fullScreenCover(item: $selectedNote) { note in
+                PhotoViewerView(photos: note.photos ?? [], initialIndex: 0)
             }
         }
     }
 
     @ViewBuilder
-    private func photoPin(_ photo: Photo) -> some View {
-        if let data = photo.thumbnailData, let uiImage = UIImage(data: data) {
+    private func notePin(_ note: Note) -> some View {
+        if let data = (note.photos ?? []).first?.thumbnailData, let uiImage = UIImage(data: data) {
             Image(uiImage: uiImage)
                 .resizable()
                 .scaledToFill()

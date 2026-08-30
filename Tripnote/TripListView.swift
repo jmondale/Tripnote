@@ -11,6 +11,7 @@ import SwiftData
 
 struct TripListView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(LocationManager.self) private var locationManager
     @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
 
     @State private var isPresentingNewTrip = false
@@ -72,6 +73,7 @@ struct TripListView: View {
                 NewTripSheet()
             }
             .onAppear {
+                locationManager.requestLocation()
                 WidgetDataManager.update(with: trips.first)
             }
             .onChange(of: trips) { _, newTrips in
