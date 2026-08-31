@@ -49,7 +49,6 @@
 		E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrailnoteWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40E32DC303E5B8B00BC5D43 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E40E32DE303E5B8B00BC5D43 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		E40E32FC303E5F4F00BC5D43 /* TripnoteWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripnoteWidgetExtension.entitlements; sourceTree = "<group>"; };
 		E4746D28302906AC0002AB4B /* TrailnoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrailnoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BF894F302660F40033F481 /* Journey Images.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Journey Images.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E4C2F43033C70F00C81093 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -136,7 +135,6 @@
 		E4BF8946302660F40033F481 = {
 			isa = PBXGroup;
 			children = (
-				E40E32FC303E5F4F00BC5D43 /* TripnoteWidgetExtension.entitlements */,
 				E4BF8951302660F40033F481 /* Tripnote */,
 				E4746D29302906AC0002AB4B /* TrailnoteTests */,
 				E40E32E0303E5B8B00BC5D43 /* TrailnoteWidget */,
