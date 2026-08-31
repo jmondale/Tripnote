@@ -1,6 +1,6 @@
 //
-//  TripnoteTests.swift
-//  TripnoteTests
+//  TrailnoteTests.swift
+//  TrailnoteTests
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -9,7 +9,7 @@
 import Testing
 import SwiftData
 import CoreLocation
-@testable import Tripnote
+@testable import Trailnote
 
 // MARK: - Shared helpers
 

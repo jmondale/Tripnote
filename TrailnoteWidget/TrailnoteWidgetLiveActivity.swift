@@ -1,6 +1,6 @@
 //
-//  TripnoteWidgetLiveActivity.swift
-//  TripnoteWidget
+//  TrailnoteWidgetLiveActivity.swift
+//  TrailnoteWidget
 //
 //  Created by Jaye Mondale on 8/25/26.
 //
@@ -9,7 +9,7 @@ import ActivityKit
 import WidgetKit
 import SwiftUI
 
-struct TripnoteWidgetAttributes: ActivityAttributes {
+struct TrailnoteWidgetAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         // Dynamic stateful properties about your activity go here!
         var emoji: String
@@ -19,9 +19,9 @@ struct TripnoteWidgetAttributes: ActivityAttributes {
     var name: String
 }
 
-struct TripnoteWidgetLiveActivity: Widget {
+struct TrailnoteWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
-        ActivityConfiguration(for: TripnoteWidgetAttributes.self) { context in
+        ActivityConfiguration(for: TrailnoteWidgetAttributes.self) { context in
             // Lock screen/banner UI goes here
             VStack {
                 Text("Hello \(context.state.emoji)")
@@ -56,25 +56,25 @@ struct TripnoteWidgetLiveActivity: Widget {
     }
 }
 
-extension TripnoteWidgetAttributes {
-    fileprivate static var preview: TripnoteWidgetAttributes {
-        TripnoteWidgetAttributes(name: "World")
+extension TrailnoteWidgetAttributes {
+    fileprivate static var preview: TrailnoteWidgetAttributes {
+        TrailnoteWidgetAttributes(name: "World")
     }
 }
 
-extension TripnoteWidgetAttributes.ContentState {
-    fileprivate static var smiley: TripnoteWidgetAttributes.ContentState {
-        TripnoteWidgetAttributes.ContentState(emoji: "😀")
+extension TrailnoteWidgetAttributes.ContentState {
+    fileprivate static var smiley: TrailnoteWidgetAttributes.ContentState {
+        TrailnoteWidgetAttributes.ContentState(emoji: "😀")
      }
-     
-     fileprivate static var starEyes: TripnoteWidgetAttributes.ContentState {
-         TripnoteWidgetAttributes.ContentState(emoji: "🤩")
+
+     fileprivate static var starEyes: TrailnoteWidgetAttributes.ContentState {
+         TrailnoteWidgetAttributes.ContentState(emoji: "🤩")
      }
 }
 
-#Preview("Notification", as: .content, using: TripnoteWidgetAttributes.preview) {
-   TripnoteWidgetLiveActivity()
+#Preview("Notification", as: .content, using: TrailnoteWidgetAttributes.preview) {
+   TrailnoteWidgetLiveActivity()
 } contentStates: {
-    TripnoteWidgetAttributes.ContentState.smiley
-    TripnoteWidgetAttributes.ContentState.starEyes
+    TrailnoteWidgetAttributes.ContentState.smiley
+    TrailnoteWidgetAttributes.ContentState.starEyes
 }

@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -11,23 +11,22 @@ import SwiftData
 
 struct ContentView: View {
     @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
+    @Environment(AppNavigationModel.self) private var navigationModel
 
     var body: some View {
-        TabView {
+        @Bindable var nav = navigationModel
+        TabView(selection: $nav.selectedTab) {
             TripListView()
-                .tabItem {
-                    Label("Trips", systemImage: "map")
-                }
+                .tabItem { Label("Trips", systemImage: "map") }
+                .tag(0)
 
             CaptureView()
-                .tabItem {
-                    Label("Capture", systemImage: "camera")
-                }
+                .tabItem { Label("Capture", systemImage: "camera") }
+                .tag(1)
 
             TripMapView()
-                .tabItem {
-                    Label("Map", systemImage: "map.fill")
-                }
+                .tabItem { Label("Map", systemImage: "map.fill") }
+                .tag(2)
         }
         .fullScreenCover(isPresented: Binding(
             get: { !hasSeenOnboarding },

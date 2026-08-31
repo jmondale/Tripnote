@@ -1,6 +1,6 @@
 //
 //  WidgetDataManager.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/24/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -12,7 +12,7 @@ import WidgetKit
 /// Writes a compact summary of the most recent trip into the shared App Group container
 /// so the home screen widget can read it without accessing the SwiftData store.
 enum WidgetDataManager {
-    static let appGroupID = "group.com.jmondale.Tripnote"
+    static let appGroupID = "group.com.jmondale.Trailnote"
     static let latestTripKey = "latestTrip"
 
     struct LatestTripData: Codable {

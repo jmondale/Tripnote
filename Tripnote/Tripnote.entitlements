@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>
-		<string>iCloud.jem.Tripnote</string>
+		<string>iCloud.jem.Trailnote</string>
 	</array>
 	<key>com.apple.developer.icloud-services</key>
 	<array>
@@ -15,11 +15,11 @@
 	</array>
 	<key>com.apple.developer.ubiquity-container-identifiers</key>
 	<array>
-		<string>iCloud.jem.Tripnote</string>
+		<string>iCloud.jem.Trailnote</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.jmondale.Tripnote</string>
+		<string>group.com.jmondale.Trailnote</string>
 	</array>
 </dict>
 </plist>

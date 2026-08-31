@@ -1,6 +1,6 @@
 //
 //  CaptureReviewSheet.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -17,11 +17,20 @@ struct CaptureReviewSheet: View {
 
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppNavigationModel.self) private var navigationModel
 
-    @State private var selectedTrip: Trip?
+    // UUID-based selection avoids SwiftData model identity issues with Picker tags.
+    // The Picker tags UUID values (reliable Equatable), and selectedTrip resolves it to a Trip.
+    @State private var selectedTripID: UUID?
     @State private var isCreatingNewTrip = false
     @State private var newTripName = ""
     @State private var noteText = ""
+    @State private var isSaving = false
+
+    private var selectedTrip: Trip? {
+        guard let id = selectedTripID else { return nil }
+        return allTrips.first { $0.id == id }
+    }
 
     var body: some View {
         NavigationStack {
@@ -49,18 +58,18 @@ struct CaptureReviewSheet: View {
                 }
 
                 Section("Trip") {
-                    if let suggestedTrip, selectedTrip?.id == suggestedTrip.id {
+                    if let suggestedTrip, selectedTripID == suggestedTrip.id {
                         Label("Suggested: \(suggestedTrip.name)", systemImage: "wand.and.stars")
                             .foregroundStyle(.tint)
                     }
 
-                    Picker("Trip", selection: $selectedTrip) {
-                        Text("None").tag(nil as Trip?)
+                    Picker("Trip", selection: $selectedTripID) {
+                        Text("None").tag(nil as UUID?)
                         ForEach(allTrips) { trip in
-                            Text(trip.name).tag(trip as Trip?)
+                            Text(trip.name).tag(trip.id as UUID?)
                         }
                     }
-                    .pickerStyle(.navigationLink)
+                    .pickerStyle(.menu)
 
                     Toggle("Create New Trip", isOn: $isCreatingNewTrip.animation())
                     if isCreatingNewTrip {
@@ -79,23 +88,39 @@ struct CaptureReviewSheet: View {
                         onFinished()
                         dismiss()
                     }
+                    .disabled(isSaving)
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
-                        .disabled(!canSave)
+                    Button("Save") {
+                        Task { await save() }
+                    }
+                    .disabled(!canSave || isSaving)
+                }
+            }
+            .overlay {
+                if isSaving {
+                    ZStack {
+                        Color.black.opacity(0.3).ignoresSafeArea()
+                        ProgressView("Saving…")
+                            .padding(20)
+                            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 14))
+                    }
                 }
             }
             .onAppear {
-                selectedTrip = suggestedTrip
+                selectedTripID = suggestedTrip?.id
             }
         }
     }
 
     private var canSave: Bool {
-        isCreatingNewTrip ? !newTripName.trimmingCharacters(in: .whitespaces).isEmpty : selectedTrip != nil
+        isCreatingNewTrip ? !newTripName.trimmingCharacters(in: .whitespaces).isEmpty : selectedTripID != nil
     }
 
-    private func save() {
+    @MainActor
+    private func save() async {
+        isSaving = true
+
         let trip: Trip
         if isCreatingNewTrip {
             let earliestCapture = photos.compactMap(\.capturedDate).min() ?? .now
@@ -104,6 +129,7 @@ struct CaptureReviewSheet: View {
         } else if let selectedTrip {
             trip = selectedTrip
         } else {
+            isSaving = false
             return // canSave guards this, but stay defensive.
         }
 
@@ -115,9 +141,18 @@ struct CaptureReviewSheet: View {
             modelContext.insert(photo)
         }
 
-        if note.location == nil, let firstPhotoLocation = note.photos?.first?.location {
+        // Use the local photos array for location since the relationship
+        // may not be populated yet by SwiftData at this point.
+        if note.location == nil, let firstPhotoLocation = photos.first?.location {
             note.setLocation(firstPhotoLocation)
         }
+
+        // Brief pause so SwiftData can write through before the destination view loads.
+        try? await Task.sleep(for: .milliseconds(300))
+
+        // Switch to Trips tab and push into the trip's detail view.
+        navigationModel.tripsPath = [trip]
+        navigationModel.selectedTab = 0
 
         onFinished()
         dismiss()

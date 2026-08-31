@@ -1,6 +1,6 @@
 //
 //  TripDetailView.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -50,6 +50,13 @@ struct TripDetailView: View {
                                     deleteNote(note)
                                 } label: {
                                     Label("Delete", systemImage: "trash")
+                                }
+                            }
+                            .contextMenu {
+                                Button(role: .destructive) {
+                                    deleteNote(note)
+                                } label: {
+                                    Label("Delete Note", systemImage: "trash")
                                 }
                             }
                     }
