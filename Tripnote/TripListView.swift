@@ -1,6 +1,6 @@
 //
 //  TripListView.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -12,6 +12,7 @@ import SwiftData
 struct TripListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LocationManager.self) private var locationManager
+    @Environment(AppNavigationModel.self) private var navigationModel
     @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
 
     @State private var isPresentingNewTrip = false
@@ -29,7 +30,8 @@ struct TripListView: View {
     }
 
     var body: some View {
-        NavigationStack {
+        @Bindable var nav = navigationModel
+        NavigationStack(path: $nav.tripsPath) {
             Group {
                 if trips.isEmpty {
                     ContentUnavailableView {
@@ -55,7 +57,7 @@ struct TripListView: View {
                     }
                 }
             }
-            .navigationTitle("Tripnote")
+            .navigationTitle("Journey Images")
             .navigationDestination(for: Trip.self) { trip in
                 TripDetailView(trip: trip)
             }

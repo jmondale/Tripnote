@@ -1,6 +1,6 @@
 //
 //  LocationManager.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/27/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		E40E32DD303E5B8B00BC5D43 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40E32DC303E5B8B00BC5D43 /* WidgetKit.framework */; };
 		E40E32DF303E5B8B00BC5D43 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40E32DE303E5B8B00BC5D43 /* SwiftUI.framework */; };
-		E40E32EE303E5B9100BC5D43 /* TripnoteWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E40E32DA303E5B8B00BC5D43 /* TripnoteWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E40E32EE303E5B9100BC5D43 /* TrailnoteWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E40E32FD303E5F9700BC5D43 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40E32DC303E5B8B00BC5D43 /* WidgetKit.framework */; };
 		E4E4C2F53033C70F00C81093 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E4C2F43033C70F00C81093 /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
@@ -38,7 +38,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				E40E32EE303E5B9100BC5D43 /* TripnoteWidgetExtension.appex in Embed Foundation Extensions */,
+				E40E32EE303E5B9100BC5D43 /* TrailnoteWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,50 +46,50 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		E40E32DA303E5B8B00BC5D43 /* TripnoteWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TripnoteWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrailnoteWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		E40E32DC303E5B8B00BC5D43 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		E40E32DE303E5B8B00BC5D43 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E40E32FC303E5F4F00BC5D43 /* TripnoteWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TripnoteWidgetExtension.entitlements; sourceTree = "<group>"; };
-		E4746D28302906AC0002AB4B /* TripnoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripnoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4BF894F302660F40033F481 /* Tripnote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripnote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4746D28302906AC0002AB4B /* TrailnoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrailnoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4BF894F302660F40033F481 /* Journey Images.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Journey Images.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4E4C2F43033C70F00C81093 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E40E32F2303E5B9100BC5D43 /* Exceptions for "TripnoteWidget" folder in "TripnoteWidgetExtension" target */ = {
+		E40E32F2303E5B9100BC5D43 /* Exceptions for "TrailnoteWidget" folder in "TrailnoteWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = E40E32D9303E5B8B00BC5D43 /* TripnoteWidgetExtension */;
+			target = E40E32D9303E5B8B00BC5D43 /* TrailnoteWidgetExtension */;
 		};
-		E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Tripnote" target */ = {
+		E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Trailnote" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = E4BF894E302660F40033F481 /* Tripnote */;
+			target = E4BF894E302660F40033F481 /* Trailnote */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E40E32E0303E5B8B00BC5D43 /* TripnoteWidget */ = {
+		E40E32E0303E5B8B00BC5D43 /* TrailnoteWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E40E32F2303E5B9100BC5D43 /* Exceptions for "TripnoteWidget" folder in "TripnoteWidgetExtension" target */,
+				E40E32F2303E5B9100BC5D43 /* Exceptions for "TrailnoteWidget" folder in "TrailnoteWidgetExtension" target */,
 			);
-			path = TripnoteWidget;
+			path = TrailnoteWidget;
 			sourceTree = "<group>";
 		};
-		E4746D29302906AC0002AB4B /* TripnoteTests */ = {
+		E4746D29302906AC0002AB4B /* TrailnoteTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = TripnoteTests;
+			path = TrailnoteTests;
 			sourceTree = "<group>";
 		};
 		E4BF8951302660F40033F481 /* Tripnote */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Tripnote" target */,
+				E4E4C2F33033703F00C81093 /* Exceptions for "Tripnote" folder in "Trailnote" target */,
 			);
 			path = Tripnote;
 			sourceTree = "<group>";
@@ -138,8 +138,8 @@
 			children = (
 				E40E32FC303E5F4F00BC5D43 /* TripnoteWidgetExtension.entitlements */,
 				E4BF8951302660F40033F481 /* Tripnote */,
-				E4746D29302906AC0002AB4B /* TripnoteTests */,
-				E40E32E0303E5B8B00BC5D43 /* TripnoteWidget */,
+				E4746D29302906AC0002AB4B /* TrailnoteTests */,
+				E40E32E0303E5B8B00BC5D43 /* TrailnoteWidget */,
 				E40E32DB303E5B8B00BC5D43 /* Frameworks */,
 				E4BF8950302660F40033F481 /* Products */,
 				E4E4C2F43033C70F00C81093 /* OnboardingView.swift */,
@@ -149,9 +149,9 @@
 		E4BF8950302660F40033F481 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E4BF894F302660F40033F481 /* Tripnote.app */,
-				E4746D28302906AC0002AB4B /* TripnoteTests.xctest */,
-				E40E32DA303E5B8B00BC5D43 /* TripnoteWidgetExtension.appex */,
+				E4BF894F302660F40033F481 /* Journey Images.app */,
+				E4746D28302906AC0002AB4B /* TrailnoteTests.xctest */,
+				E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E40E32D9303E5B8B00BC5D43 /* TripnoteWidgetExtension */ = {
+		E40E32D9303E5B8B00BC5D43 /* TrailnoteWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E40E32EF303E5B9100BC5D43 /* Build configuration list for PBXNativeTarget "TripnoteWidgetExtension" */;
+			buildConfigurationList = E40E32EF303E5B9100BC5D43 /* Build configuration list for PBXNativeTarget "TrailnoteWidgetExtension" */;
 			buildPhases = (
 				E40E32D6303E5B8B00BC5D43 /* Sources */,
 				E40E32D7303E5B8B00BC5D43 /* Frameworks */,
@@ -172,18 +172,18 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E40E32E0303E5B8B00BC5D43 /* TripnoteWidget */,
+				E40E32E0303E5B8B00BC5D43 /* TrailnoteWidget */,
 			);
-			name = TripnoteWidgetExtension;
+			name = TrailnoteWidgetExtension;
 			packageProductDependencies = (
 			);
 			productName = TripnoteWidgetExtension;
-			productReference = E40E32DA303E5B8B00BC5D43 /* TripnoteWidgetExtension.appex */;
+			productReference = E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		E4746D27302906AC0002AB4B /* TripnoteTests */ = {
+		E4746D27302906AC0002AB4B /* TrailnoteTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4746D30302906AC0002AB4B /* Build configuration list for PBXNativeTarget "TripnoteTests" */;
+			buildConfigurationList = E4746D30302906AC0002AB4B /* Build configuration list for PBXNativeTarget "TrailnoteTests" */;
 			buildPhases = (
 				E4746D24302906AC0002AB4B /* Sources */,
 				E4746D25302906AC0002AB4B /* Frameworks */,
@@ -195,18 +195,18 @@
 				E4746D2D302906AC0002AB4B /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				E4746D29302906AC0002AB4B /* TripnoteTests */,
+				E4746D29302906AC0002AB4B /* TrailnoteTests */,
 			);
-			name = TripnoteTests;
+			name = TrailnoteTests;
 			packageProductDependencies = (
 			);
 			productName = TripnoteTests;
-			productReference = E4746D28302906AC0002AB4B /* TripnoteTests.xctest */;
+			productReference = E4746D28302906AC0002AB4B /* TrailnoteTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E4BF894E302660F40033F481 /* Tripnote */ = {
+		E4BF894E302660F40033F481 /* Trailnote */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4BF895A302660F70033F481 /* Build configuration list for PBXNativeTarget "Tripnote" */;
+			buildConfigurationList = E4BF895A302660F70033F481 /* Build configuration list for PBXNativeTarget "Trailnote" */;
 			buildPhases = (
 				E4BF894B302660F40033F481 /* Sources */,
 				E4BF894C302660F40033F481 /* Frameworks */,
@@ -221,11 +221,11 @@
 			fileSystemSynchronizedGroups = (
 				E4BF8951302660F40033F481 /* Tripnote */,
 			);
-			name = Tripnote;
+			name = Trailnote;
 			packageProductDependencies = (
 			);
 			productName = Tripnote;
-			productReference = E4BF894F302660F40033F481 /* Tripnote.app */;
+			productReference = E4BF894F302660F40033F481 /* Journey Images.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -264,9 +264,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E4BF894E302660F40033F481 /* Tripnote */,
-				E4746D27302906AC0002AB4B /* TripnoteTests */,
-				E40E32D9303E5B8B00BC5D43 /* TripnoteWidgetExtension */,
+				E4BF894E302660F40033F481 /* Trailnote */,
+				E4746D27302906AC0002AB4B /* TrailnoteTests */,
+				E40E32D9303E5B8B00BC5D43 /* TrailnoteWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -323,12 +323,12 @@
 /* Begin PBXTargetDependency section */
 		E40E32ED303E5B9100BC5D43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E40E32D9303E5B8B00BC5D43 /* TripnoteWidgetExtension */;
+			target = E40E32D9303E5B8B00BC5D43 /* TrailnoteWidgetExtension */;
 			targetProxy = E40E32EC303E5B9100BC5D43 /* PBXContainerItemProxy */;
 		};
 		E4746D2D302906AC0002AB4B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = E4BF894E302660F40033F481 /* Tripnote */;
+			target = E4BF894E302660F40033F481 /* Trailnote */;
 			targetProxy = E4746D2C302906AC0002AB4B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -339,13 +339,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TripnoteWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TrailnoteWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
+				DSTROOT = /tmp/tripnote.dst;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TripnoteWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TripnoteWidget;
+				INFOPLIST_FILE = TrailnoteWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TrailnoteWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -353,7 +354,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.Tripnote.TripnoteWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = jem.Trailnote.TrailnoteWidgetExtension;
+				PRODUCT_MODULE_NAME = TrailnoteWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -370,13 +372,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CODE_SIGN_ENTITLEMENTS = TripnoteWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TrailnoteWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
+				DSTROOT = /tmp/tripnote.dst;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TripnoteWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TripnoteWidget;
+				INFOPLIST_FILE = TrailnoteWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TrailnoteWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -384,7 +387,8 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.Tripnote.TripnoteWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = jem.Trailnote.TrailnoteWidgetExtension;
+				PRODUCT_MODULE_NAME = TrailnoteWidgetExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
@@ -405,7 +409,7 @@
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.TripnoteTests;
+				PRODUCT_BUNDLE_IDENTIFIER = jem.TrailnoteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -426,7 +430,7 @@
 				DEVELOPMENT_TEAM = K4RQKPMFWC;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.TripnoteTests;
+				PRODUCT_BUNDLE_IDENTIFIER = jem.TrailnoteTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -571,7 +575,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tripnote/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Tripnote uses your photo library to attach pictures to your trip notes.\"";
+				INFOPLIST_KEY_CFBundleDisplayName = "Journey Images";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Journey Images uses your camera to capture photos for your trip notes.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Journey Images uses your location to pin notes and photos on the map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Journey Images can save your trip photos to your photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Journey Images accesses your photo library so you can add existing photos to your trip notes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -582,8 +590,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.Tripnote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = jem.Trailnote;
+				PRODUCT_MODULE_NAME = Trailnote;
+				PRODUCT_NAME = "Journey Images";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -606,7 +615,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Tripnote/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"Tripnote uses your photo library to attach pictures to your trip notes.\"";
+				INFOPLIST_KEY_CFBundleDisplayName = "Journey Images";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Journey Images uses your camera to capture photos for your trip notes.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Journey Images uses your location to pin notes and photos on the map.";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Journey Images can save your trip photos to your photo library.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Journey Images accesses your photo library so you can add existing photos to your trip notes.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -617,8 +630,9 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = jem.Tripnote;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = jem.Trailnote;
+				PRODUCT_MODULE_NAME = Trailnote;
+				PRODUCT_NAME = "Journey Images";
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
@@ -632,7 +646,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E40E32EF303E5B9100BC5D43 /* Build configuration list for PBXNativeTarget "TripnoteWidgetExtension" */ = {
+		E40E32EF303E5B9100BC5D43 /* Build configuration list for PBXNativeTarget "TrailnoteWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E40E32F0303E5B9100BC5D43 /* Debug */,
@@ -641,7 +655,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4746D30302906AC0002AB4B /* Build configuration list for PBXNativeTarget "TripnoteTests" */ = {
+		E4746D30302906AC0002AB4B /* Build configuration list for PBXNativeTarget "TrailnoteTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4746D2E302906AC0002AB4B /* Debug */,
@@ -659,7 +673,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4BF895A302660F70033F481 /* Build configuration list for PBXNativeTarget "Tripnote" */ = {
+		E4BF895A302660F70033F481 /* Build configuration list for PBXNativeTarget "Trailnote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4BF895B302660F70033F481 /* Debug */,

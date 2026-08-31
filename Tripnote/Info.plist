@@ -3,16 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tripnote uses your location to pin notes and photos on the map.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Tripnote uses your camera to capture photos for your trip notes.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Tripnote accesses your photo library so you can add existing photos to your trip notes.</string>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>Tripnote can save your trip photos to your photo library.</string>
+	<array/>
 </dict>
 </plist>

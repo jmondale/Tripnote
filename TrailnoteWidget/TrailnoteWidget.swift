@@ -1,6 +1,6 @@
 //
-//  TripnoteWidget.swift
-//  TripnoteWidget
+//  TrailnoteWidget.swift
+//  TrailnoteWidget
 //
 //  Created by Jaye Mondale on 8/25/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -16,45 +16,45 @@ private struct LatestTripData: Codable {
     let thumbnailData: Data?
 }
 
-struct TripnoteEntry: TimelineEntry {
+struct TrailnoteEntry: TimelineEntry {
     let date: Date
     let name: String
     let dateRange: String
     let thumbnail: UIImage?
 }
 
-struct TripnoteProvider: TimelineProvider {
-    private let appGroupID = "group.com.jmondale.Tripnote"
+struct TrailnoteProvider: TimelineProvider {
+    private let appGroupID = "group.com.jmondale.Trailnote"
     private let latestTripKey = "latestTrip"
 
-    func placeholder(in context: Context) -> TripnoteEntry {
-        TripnoteEntry(date: .now, name: "Summer Road Trip", dateRange: "Aug 1–7, 2026", thumbnail: nil)
+    func placeholder(in context: Context) -> TrailnoteEntry {
+        TrailnoteEntry(date: .now, name: "Summer Road Trip", dateRange: "Aug 1–7, 2026", thumbnail: nil)
     }
 
-    func getSnapshot(in context: Context, completion: @escaping (TripnoteEntry) -> Void) {
+    func getSnapshot(in context: Context, completion: @escaping (TrailnoteEntry) -> Void) {
         completion(makeEntry())
     }
 
-    func getTimeline(in context: Context, completion: @escaping (Timeline<TripnoteEntry>) -> Void) {
+    func getTimeline(in context: Context, completion: @escaping (Timeline<TrailnoteEntry>) -> Void) {
         // Reloads are driven by the main app calling WidgetCenter.reloadAllTimelines().
         completion(Timeline(entries: [makeEntry()], policy: .never))
     }
 
-    private func makeEntry() -> TripnoteEntry {
+    private func makeEntry() -> TrailnoteEntry {
         guard
             let defaults = UserDefaults(suiteName: appGroupID),
             let data = defaults.data(forKey: latestTripKey),
             let tripData = try? JSONDecoder().decode(LatestTripData.self, from: data)
         else {
-            return TripnoteEntry(date: .now, name: "No trips yet", dateRange: "", thumbnail: nil)
+            return TrailnoteEntry(date: .now, name: "No trips yet", dateRange: "", thumbnail: nil)
         }
         let thumbnail = tripData.thumbnailData.flatMap { UIImage(data: $0) }
-        return TripnoteEntry(date: .now, name: tripData.name, dateRange: tripData.dateRange, thumbnail: thumbnail)
+        return TrailnoteEntry(date: .now, name: tripData.name, dateRange: tripData.dateRange, thumbnail: thumbnail)
     }
 }
 
-struct TripnoteWidgetEntryView: View {
-    let entry: TripnoteEntry
+struct TrailnoteWidgetEntryView: View {
+    let entry: TrailnoteEntry
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -95,12 +95,12 @@ struct TripnoteWidgetEntryView: View {
     }
 }
 
-struct TripnoteWidget: Widget {
-    let kind = "TripnoteWidget"
+struct TrailnoteWidget: Widget {
+    let kind = "TrailnoteWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: TripnoteProvider()) { entry in
-            TripnoteWidgetEntryView(entry: entry)
+        StaticConfiguration(kind: kind, provider: TrailnoteProvider()) { entry in
+            TrailnoteWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Latest Trip")
         .description("Shows your most recent trip at a glance.")
@@ -109,7 +109,7 @@ struct TripnoteWidget: Widget {
 }
 
 #Preview(as: .systemSmall) {
-    TripnoteWidget()
+    TrailnoteWidget()
 } timeline: {
-    TripnoteEntry(date: .now, name: "Grand Canyon", dateRange: "Aug 10–14, 2026", thumbnail: nil)
+    TrailnoteEntry(date: .now, name: "Grand Canyon", dateRange: "Aug 10–14, 2026", thumbnail: nil)
 }

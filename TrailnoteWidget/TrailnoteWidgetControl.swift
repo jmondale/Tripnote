@@ -1,6 +1,6 @@
 //
-//  TripnoteWidgetControl.swift
-//  TripnoteWidget
+//  TrailnoteWidgetControl.swift
+//  TrailnoteWidget
 //
 //  Created by Jaye Mondale on 8/25/26.
 //
@@ -9,10 +9,10 @@ import AppIntents
 import SwiftUI
 import WidgetKit
 
-struct TripnoteWidgetControl: ControlWidget {
+struct TrailnoteWidgetControl: ControlWidget {
     var body: some ControlWidgetConfiguration {
         StaticControlConfiguration(
-            kind: "jem.Tripnote.TripnoteWidget",
+            kind: "jem.Trailnote.TrailnoteWidget",
             provider: Provider()
         ) { value in
             ControlWidgetToggle(
@@ -28,7 +28,7 @@ struct TripnoteWidgetControl: ControlWidget {
     }
 }
 
-extension TripnoteWidgetControl {
+extension TrailnoteWidgetControl {
     struct Provider: ControlValueProvider {
         var previewValue: Bool {
             false

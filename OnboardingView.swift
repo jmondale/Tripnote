@@ -1,6 +1,6 @@
 //
 //  OnboardingView.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/17/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -15,7 +15,7 @@ struct OnboardingView: View {
 
     private let pages: [OnboardingPage] = [
         OnboardingPage(
-            title: "Welcome to Tripnote",
+            title: "Welcome to Journey Images",
             subtitle: "Your personal travel journal for every adventure.",
             systemImage: "map.fill",
             color: .blue

@@ -1,6 +1,6 @@
 //
 //  CaptureView.swift
-//  Tripnote
+//  Trailnote
 //
 //  Created by Jaye Mondale on 8/7/26.
 //  Copyright © 2026 Jaye Mondale. All rights reserved.
@@ -25,7 +25,7 @@ struct CaptureView: View {
                     .font(.system(size: 56))
                     .foregroundStyle(.secondary)
 
-                Text("Capture a moment, and Tripnote will suggest which trip it belongs to.")
+                Text("Capture a moment, and Journey Images will suggest which trip it belongs to.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
