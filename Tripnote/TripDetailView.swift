@@ -15,11 +15,13 @@ struct TripDetailView: View {
     @Bindable var trip: Trip
     @Environment(\.modelContext) private var modelContext
     @Environment(LocationManager.self) private var locationManager
+    @Environment(EntitlementManager.self) private var entitlements
 
     @State private var isImporting = false
     @State private var importError: String?
     @State private var isPresentingEditTrip = false
     @State private var exportedPDFURL: URL?
+    @State private var isPresentingPaywall = false
 
     private var sortedNotes: [Note] {
         (trip.notes ?? []).sorted { $0.createdDate > $1.createdDate }
@@ -69,7 +71,11 @@ struct TripDetailView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    exportedPDFURL = try? TripExporter.exportPDF(for: trip)
+                    if entitlements.isPro {
+                        exportedPDFURL = try? TripExporter.exportPDF(for: trip)
+                    } else {
+                        isPresentingPaywall = true
+                    }
                 } label: {
                     Image(systemName: "square.and.arrow.up")
                 }
@@ -99,6 +105,9 @@ struct TripDetailView: View {
         }, message: {
             Text(importError ?? "")
         })
+        .sheet(isPresented: $isPresentingPaywall) {
+            ProPaywallSheet(triggerFeature: "PDF Export")
+        }
     }
 
     private var actionBar: some View {

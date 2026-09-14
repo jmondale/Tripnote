@@ -11,6 +11,7 @@
 		E40E32DF303E5B8B00BC5D43 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40E32DE303E5B8B00BC5D43 /* SwiftUI.framework */; };
 		E40E32EE303E5B9100BC5D43 /* TrailnoteWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E40E32DA303E5B8B00BC5D43 /* TrailnoteWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E40E32FD303E5F9700BC5D43 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E40E32DC303E5B8B00BC5D43 /* WidgetKit.framework */; };
+		E4DA3EA530545C1600D4E898 /* StoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = E4DA3EA430545C1600D4E898 /* StoreKit.storekit */; };
 		E4E4C2F53033C70F00C81093 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4E4C2F43033C70F00C81093 /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 		E40E32DE303E5B8B00BC5D43 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		E4746D28302906AC0002AB4B /* TrailnoteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TrailnoteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4BF894F302660F40033F481 /* Journey Images.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Journey Images.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4DA3EA430545C1600D4E898 /* StoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = StoreKit.storekit; sourceTree = "<group>"; };
 		E4E4C2F43033C70F00C81093 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 		E4BF8946302660F40033F481 = {
 			isa = PBXGroup;
 			children = (
+				E4DA3EA430545C1600D4E898 /* StoreKit.storekit */,
 				E4BF8951302660F40033F481 /* Tripnote */,
 				E4746D29302906AC0002AB4B /* TrailnoteTests */,
 				E40E32E0303E5B8B00BC5D43 /* TrailnoteWidget */,
@@ -288,6 +291,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4DA3EA530545C1600D4E898 /* StoreKit.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@ struct TripListView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(LocationManager.self) private var locationManager
     @Environment(AppNavigationModel.self) private var navigationModel
+    @Environment(EntitlementManager.self) private var entitlements
     @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
 
     @State private var isPresentingNewTrip = false
@@ -76,10 +77,19 @@ struct TripListView: View {
             }
             .onAppear {
                 locationManager.requestLocation()
-                WidgetDataManager.update(with: trips.first)
+                if entitlements.isPro {
+                    WidgetDataManager.update(with: trips.first)
+                }
             }
             .onChange(of: trips) { _, newTrips in
-                WidgetDataManager.update(with: newTrips.first)
+                if entitlements.isPro {
+                    WidgetDataManager.update(with: newTrips.first)
+                }
+            }
+            .onChange(of: entitlements.isPro) { _, isPro in
+                if isPro {
+                    WidgetDataManager.update(with: trips.first)
+                }
             }
         }
     }

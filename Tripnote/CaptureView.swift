@@ -13,6 +13,7 @@ import SwiftData
 /// Photos captured here get a suggested trip (via TripSuggestionService) before saving.
 struct CaptureView: View {
     @Query(sort: \Trip.startDate, order: .reverse) private var trips: [Trip]
+    @Environment(EntitlementManager.self) private var entitlements
 
     @State private var pendingPhotos: [Photo] = []
     @State private var isImporting = false
@@ -51,7 +52,9 @@ struct CaptureView: View {
             .sheet(isPresented: .constant(!pendingPhotos.isEmpty)) {
                 CaptureReviewSheet(
                     photos: pendingPhotos,
-                    suggestedTrip: pendingPhotos.first.flatMap { TripSuggestionService.suggestedTrip(for: $0, from: trips) },
+                    suggestedTrip: entitlements.isPro
+                        ? pendingPhotos.first.flatMap { TripSuggestionService.suggestedTrip(for: $0, from: trips) }
+                        : nil,
                     allTrips: trips,
                     onFinished: { pendingPhotos = [] }
                 )
