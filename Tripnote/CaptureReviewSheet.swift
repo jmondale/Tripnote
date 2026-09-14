@@ -18,6 +18,7 @@ struct CaptureReviewSheet: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @Environment(AppNavigationModel.self) private var navigationModel
+    @Environment(EntitlementManager.self) private var entitlements
 
     // UUID-based selection avoids SwiftData model identity issues with Picker tags.
     // The Picker tags UUID values (reliable Equatable), and selectedTrip resolves it to a Trip.
@@ -26,6 +27,7 @@ struct CaptureReviewSheet: View {
     @State private var newTripName = ""
     @State private var noteText = ""
     @State private var isSaving = false
+    @State private var isPresentingPaywall = false
 
     private var selectedTrip: Trip? {
         guard let id = selectedTripID else { return nil }
@@ -61,6 +63,13 @@ struct CaptureReviewSheet: View {
                     if let suggestedTrip, selectedTripID == suggestedTrip.id {
                         Label("Suggested: \(suggestedTrip.name)", systemImage: "wand.and.stars")
                             .foregroundStyle(.tint)
+                    } else if !entitlements.isPro {
+                        Button {
+                            isPresentingPaywall = true
+                        } label: {
+                            Label("Get Smart Trip Suggestions", systemImage: "wand.and.stars")
+                                .font(.subheadline)
+                        }
                     }
 
                     Picker("Trip", selection: $selectedTripID) {
@@ -109,6 +118,9 @@ struct CaptureReviewSheet: View {
             }
             .onAppear {
                 selectedTripID = suggestedTrip?.id
+            }
+            .sheet(isPresented: $isPresentingPaywall) {
+                ProPaywallSheet(triggerFeature: "Smart Trip Suggestions")
             }
         }
     }

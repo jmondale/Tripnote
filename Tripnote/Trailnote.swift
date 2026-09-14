@@ -29,12 +29,14 @@ struct TrailnoteApp: App {
 
     @State private var locationManager = LocationManager()
     @State private var navigationModel = AppNavigationModel()
+    @State private var entitlements = EntitlementManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(locationManager)
                 .environment(navigationModel)
+                .environment(entitlements)
         }
         .modelContainer(Self.sharedModelContainer)
     }
